@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<serviceManagerDescriptor>
+    <managerType>pl.edu.icm.synat.api.services.registry.RegistryManager</managerType>
+    <serviceLocations>
+        <location>service:jmx:rmi://????/jndi/rmi://????:????/myconnector</location>
+        <protocol>jmx</protocol>
+        <protocolFeatures>
+            <entry><key>objectName</key><value>bean:name=serviceRegistry</value></entry>
+        </protocolFeatures>
+    </serviceLocations>
+</serviceManagerDescriptor>

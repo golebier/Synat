@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:synat="http://www.ceon.pl/synat/schema/client"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://www.ceon.pl/synat/schema/client http://www.ceon.pl/synat/schema/synat-client-1.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <import resource="client.xml"/>
+
+    <synat:serviceBean id="indexService" businessInterface="pl.edu.icm.synat.api.services.index.fulltext.FulltextIndexService" serviceId="Index" />
+
+    <synat:serviceBean id="statelessStore" businessInterface="pl.edu.icm.synat.api.services.store.StatelessStore" serviceId="Store" protocols="httpinvoker" />
+
+    <bean id="rest-template" class="org.springframework.web.client.RestTemplate">
+    </bean>
+
+    <bean id="integration-metadata-enricher" class="pl.edu.icm.synat.process.common.enrich.impl.sonca.SoncaMetadataEnricher">
+        <property name="restTemplate" ref="rest-template"/>
+        <property name="url" value="http://0.0.0.0:8080/sonca/webresources/oecd"/>
+    </bean>
+
+    <bean id="integration-metadata-transformer" class="pl.edu.icm.synat.process.common.enrich.impl.sonca.SoncaMetadataTransformer">
+        <property name="metadataEnricher" ref="integration-metadata-enricher"/>
+    </bean>
+
+    <bean id="bwmetaDeserializer" class="pl.edu.icm.synat.application.model.bwmeta.utils.BWMetaDeserializerImpl">
+    </bean>
+
+    <bean id="recordBwmetaExtractor" class="pl.edu.icm.synat.logic.model.utils.impl.RecordBwmetaExtractorImpl">
+        <property name="bwmetaDeserializer" ref="bwmetaDeserializer"/>
+    </bean>
+
+    <bean id="transformer" class="pl.edu.icm.synat.process.common.enrich.impl.sonca.SoncaMetadataWithChildrenTransformer">
+        <property name="metadataEnricher" ref="integration-metadata-enricher"/>
+        <property name="store" ref="statelessStore" />
+        <property name="recordBwmetaExtractor" ref="recordBwmetaExtractor"/>
+        <property name="indexService" ref="indexService"/>
+        <property name="serchedElementSize" value="10"/>
+    </bean>
+</beans>
