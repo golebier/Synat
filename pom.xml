@@ -11,8 +11,8 @@
     <url>http://maven.apache.org</url>
 
         <properties>
-                <spring.version>3.2.8.RELEASE</spring.version>
-                <jetty.version>8.1.12.v20130726</jetty.version>
+            <spring.version>3.2.8.RELEASE</spring.version>
+            <jetty.version>8.1.12.v20130726</jetty.version>
         </properties>
 
     <dependencies>
@@ -25,13 +25,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-                        <version>${spring.version}</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-                        <version>6.5.2</version>
+            <version>6.5.2</version>
             <scope>test</scope>
         </dependency>
          <dependency>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
-                        <version>1.4.0</version>
+            <version>1.4.0</version>
         </dependency>
         <dependency>
             <groupId>pl.edu.icm.synat</groupId>
@@ -77,24 +77,24 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-                        <version>${spring.version}</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-                        <version>${jetty.version}</version>
+            <version>${jetty.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
-                        <version>${jetty.version}</version>
+            <version>${jetty.version}</version>
         </dependency>
         <dependency>
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
-                        <version>4.0.7</version>
+            <version>4.0.7</version>
         </dependency>
     </dependencies>
 </project>
