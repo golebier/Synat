@@ -1,4 +1,4 @@
-package pl.edu.icm.synat.sdk.client.metadata.transformer.nlm.to.yelement;
+package pl.edu.icm.synat.sdk.client.pdf.to.bwmeta;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,16 +24,18 @@ import pl.edu.icm.synat.cermine.pdf.to.nlm.CerminePdf2NlmString;
 import pl.edu.icm.synat.cermine.transform.impl.CermineTransformerImpl;
 
 /**
- * {@code MetadataTransformerPdfToYElementExample} example.
+ * {@code PdfToBwmetaExample} example.
+ * Read PDF file and make {@code Bwmeta} from it.
 *
 * @author Gra <Gołębiewski Radosław A.> google.com/+RadoslawGolebiewski
 *
 */
 @Component
-public class MetadataTransformerPdfToYElementExample {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MetadataTransformerPdfToYElementExample.class);
+public class PdfToBwmetaExample {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PdfToBwmetaExample.class);
     private static final String PDF_FILE = "/home/Rt/Data/501423f0-0b37-3794-9e67-35b8abf1edf0.pdf";
     private static final String BWMETA_FILE = "/home/Rt/Data/501423f0-0b37-3794-9e67-35b8abf1edf0.bwmeta";
+    private static final String NLM_FILE = "/home/Rt/Data/501423f0-0b37-3794-9e67-35b8abf1edf0.nlm";
 
     @SynatServiceRef(serviceId = "Store")
     private StatelessStore store;
@@ -49,6 +51,10 @@ public class MetadataTransformerPdfToYElementExample {
             LOGGER.info(bwmeta);
             final File bwmetaFile = new File(BWMETA_FILE);
             FileUtils.write(bwmetaFile, bwmeta);
+
+            CerminePdf2NlmString nlmTransformer = new CerminePdf2NlmString(new PdfNLMContentExtractor());
+            final File nlmFile = new File(NLM_FILE);
+            FileUtils.write(nlmFile, nlmTransformer.prepare(new FileInputStream(file)));
         }
     }
 }
